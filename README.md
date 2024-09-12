@@ -1,9 +1,7 @@
 # Noir Language
 - The Noir syntax assert can be interpreted as something similar to constraints in other zk-contract languages.
 - [Noir docs](https://noir-lang.org/docs)
-
-## Zk Camp's Noir Course
-- https://github.com/ZKCamp/aztec-noir-course 
+- [Zk Camp's Noir Course](https://github.com/ZKCamp/aztec-noir-course)
 
 ## Program 1: Field
 - The integer values it takes corresponds to the Elliptic curve used in the backed i.e. the BN254 or BabyJubJub curve.
