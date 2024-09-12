@@ -3,6 +3,8 @@
 - [Noir docs](https://noir-lang.org/docs)
 - [Zk Camp's Noir Course](https://github.com/ZKCamp/aztec-noir-course)
 
+![Baby Jubjub](https://cdn.discordapp.com/attachments/1161924225569931294/1283744982733291572/aia_l_Create_a_very_cute_baby_sitting_in_pram_shining_and_cute__2098f76e-539e-417e-be4e-deafa6194aca.png?ex=66e41c2e&is=66e2caae&hm=64dd91280dce9c1d9a0050975f8b1a97cb175f890cd937530dcf1eb0f5ebe338&)
+
 ## Program 1: Field
 - The integer values it takes corresponds to the Elliptic curve used in the backed i.e. the BN254 or BabyJubJub curve.
 
