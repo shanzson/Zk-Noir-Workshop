@@ -4,6 +4,9 @@
 ## Field
 - The integer values it takes corresponds to the Elliptic curve used in the backed i.e. the BN254 or BabyJubJub curve.
 
+## Zk Camp's Noir Course
+- https://github.com/ZKCamp/aztec-noir-course 
+
 ## Program 1: Field
 
 ```
@@ -168,7 +171,7 @@ fn test_main() {
 
 ```
 
-## Division of Fields via Multiplicative inverse (Field takes values only on Baby Jub jub curve)
+## Programs 9: Division of Fields via Multiplicative inverse (Field takes values only on Baby Jub jub curve)
 
 1) Example 1
 
@@ -190,6 +193,7 @@ fn test_main() {
 
 - `In python:`
 - `Value of p below comes from here:` [Baby Jub Jub Docs](https://iden3-docs.readthedocs.io/en/latest/iden3_repos/research/publications/zkproof-standards-workshop-2/baby-jubjub/baby-jubjub.html) 
+- Right now Noir uses Grumpkin curve (which is also used in Halo and Mina Protocol)
 - Use `int("0x15c4966681608f388da622fe6509f596096c7e7d5155b4585c9d9952165967dc",16)` to convert printed Noir logs into integer in Python
 
 ```
@@ -233,10 +237,92 @@ fn test_main() {
 nargo test --show-output
 ```
 
-- This 
+- This is another example
 
+```
+use dep::std;
 
+global RATE_IN_PERCENT = 5;
 
+struct Item {
+    price: Field,
+    quantity: Field,
+    cost: Field,
+}
+
+impl Item {
+    fn check_cost(self) -> bool {
+        self.price * self.quantity == self.cost
+    }
+}
+
+fn main(items: [Item; 2]) -> pub Field {
+    assert(items.all(|i: Item| i.check_cost())); 
+    
+    let total = items.fold(0, |x, i: Item| x + i.cost);
+    println(total);
+
+    total + (total * RATE_IN_PERCENT) / 100 // 9 + (9 * 5) * inv(100)
+}
+
+#[test]
+fn test_main() {
+    let item1 = Item { price: 1, quantity: 1, cost: 1 };
+    let item2 = Item { price: 2, quantity: 4, cost: 8 };
+    
+    let total = main([item1, item2]);
+    println(total);
+    // assert(total == 3283236430775891283336960861788591263282254660062405151554730627986371274352);
+}
+
+```
+
+## Program 10: 
+- Run `nargo info` on the above code.
+- Then run `nargo info` on the code below and compare
+```
+use dep::std;
+
+global RATE_IN_PERCENT = 5;
+global MIN_TAX_THRESHOLD = 8;
+
+struct Item {
+    price: Field,
+    quantity: Field,
+    cost: Field,
+}
+
+impl Item {
+    fn check_cost(self) -> bool {
+        self.price * self.quantity == self.cost
+    }
+}
+
+fn main(items: [Item; 2]) -> pub Field {
+    assert(items.all(|i: Item| i.check_cost())); 
+    
+    let total = items.fold(0, |x, i: Item| x + i.cost);
+    println(total);
+
+    if (total as u64 > MIN_TAX_THRESHOLD){
+        total + total * RATE_IN_PERCENT / 100
+    }
+    else {
+        total
+    }
+}
+
+#[test]
+fn test_main() {
+    let item1 = Item { price: 1, quantity: 1, cost: 1 };
+    let item2 = Item { price: 2, quantity: 4, cost: 8 };
+    
+    let total = main([item1, item2]);
+    println(total);
+    // assert(total == 18967536818011759742494742649109346476339598193270847513121495473105084380374 );
+}
+
+```
 
 
 
@@ -369,5 +455,8 @@ The power of the language is that it is proving system agnostic. Once converted 
 - quest set-framework foundry
 - Download the quest via `quest find```.
 - Old Docs: https://github.com/noir-lang/noir/tree/v0.22.0/docs 
+
+## Awesome Noir
+- https://github.com/noir-lang/awesome-noir 
 
 
